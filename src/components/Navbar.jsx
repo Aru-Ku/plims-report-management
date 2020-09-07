@@ -1,10 +1,7 @@
 import React from "react";
 import { Link, NavLink } from "react-router-dom";
-import { GoogleSignin, SignOut } from "../utils/firebase";
-import useAuth from "../store/auth";
 
 export default function Navbar() {
-	const [isAuthenticated, handleAuth] = useAuth();
 	return (
 		<header className='navbar navbar-expand-lg navbar-dark user-select-none' style={{ backgroundColor: "rgb(53,53,53)" }}>
 			<div className='container'>
@@ -28,29 +25,10 @@ export default function Navbar() {
 								New Requsition
 							</NavLink>
 						</li>
-						{isAuthenticated ? (
-							<li className='nav-item'>
-								<NavLink className='nav-link' to='/forms' activeStyle={{ pointerEvents: "none" }}>
-									Requsition Forms
-								</NavLink>
-							</li>
-						) : null}
 						<li className='nav-item'>
-							<button
-								className='btn btn-primary btn-block'
-								onClick={() => {
-									//TODO : Error Handling
-									if (!isAuthenticated)
-										GoogleSignin()
-											.then((data) => handleAuth(data, "login"))
-											.catch((e) => console.log(e));
-									else
-										SignOut()
-											.then((data) => handleAuth(data, "signout"))
-											.catch((e) => console.log(e));
-								}}>
-								{!isAuthenticated ? "Google Login" : "Logout"}
-							</button>
+							<NavLink className='nav-link' to='/forms' activeStyle={{ pointerEvents: "none" }}>
+								Requsition Forms
+							</NavLink>
 						</li>
 					</ul>
 				</div>
