@@ -10,7 +10,15 @@ const LandingPage = () => {
 					<h5>New Requistion Form</h5>
 					<ul>
 						<li>Fill the details and submit</li>
-						<li>No Login Required</li>
+					</ul>
+				</div>
+				<div>
+					<h5>View All Requistion Form</h5>
+					<ul>
+						<li>See forms in table view</li>
+						<li>Check form details</li>
+						<li>Add test results</li>
+						<li>Take actions</li>
 					</ul>
 				</div>
 				<hr />
