@@ -4,51 +4,46 @@ import { ClientContent, SpecimenContent } from "../../../utils/formContents";
 
 export const ClientDetails = ({ formDetails, handleInputChange }) => (
 	<Fragment>
-		{Object.entries(ClientContent).map(([key, item]) => {
-			if (item.element === "MultiSelect")
-				return (
-					<MultiSelect
-						key={key}
-						{...item}
-						value={formDetails.has(item.label) ? formDetails.get(item.label) : ""}
-						update={(e) => handleInputChange(item.label, e.target.value)}
-					/>
-				);
-			if (item.element === "TextArea")
-				return (
-					<TextArea
-						key={key}
-						{...item}
-						value={formDetails.has(item.label) ? formDetails.get(item.label) : ""}
-						update={(e) => handleInputChange(item.label, e.target.value)}
-					/>
-				);
-			if (item.element === "TextInput")
-				return (
-					<TextInput
-						key={key}
-						{...item}
-						value={formDetails.has(item.label) ? formDetails.get(item.label) : ""}
-						update={(e) => handleInputChange(item.label, e.target.value)}
-					/>
-				);
-		})}
+		{Object.entries(ClientContent).map(([key, item]) =>
+			item.element === "MultiSelect" ? (
+				<MultiSelect
+					key={key}
+					{...item}
+					value={formDetails.has(item.label) ? formDetails.get(item.label) : ""}
+					update={(e) => handleInputChange(item.label, e.target.value)}
+				/>
+			) : item.element === "TextArea" ? (
+				<TextArea
+					key={key}
+					{...item}
+					value={formDetails.has(item.label) ? formDetails.get(item.label) : ""}
+					update={(e) => handleInputChange(item.label, e.target.value)}
+				/>
+			) : (
+				<TextInput
+					key={key}
+					{...item}
+					value={formDetails.has(item.label) ? formDetails.get(item.label) : ""}
+					update={(e) => handleInputChange(item.label, e.target.value)}
+				/>
+			)
+		)}
 	</Fragment>
 );
 
 export const SpecimenDetails = ({ formDetails, handleInputChange }) => (
 	<Fragment>
-		{Object.entries(SpecimenContent).map(([key, item]) => {
-			if (item.element === "TextInput")
-				return (
+		{Object.entries(SpecimenContent).map(
+			([key, item]) =>
+				item.element === "TextInput" && (
 					<TextInput
 						key={key}
 						{...item}
 						value={formDetails.has(item.label) ? formDetails.get(item.label) : ""}
 						update={(e) => handleInputChange(item.label, e.target.value)}
 					/>
-				);
-		})}
+				)
+		)}
 	</Fragment>
 );
 
