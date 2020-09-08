@@ -14,10 +14,10 @@ export default function FormSubmitted(props) {
 				<p className='card-text lead'>
 					Yor requisition form with form id <span className='font-weight-bold text-monospace'>{formID}</span> has be successfully submitted
 				</p>
-				<Link to='/new' class='card-link'>
+				<Link to='/new' className='card-link'>
 					Submit another form
 				</Link>
-				<Link to='/' class='card-link'>
+				<Link to='/' className='card-link'>
 					Go to Home
 				</Link>
 			</div>

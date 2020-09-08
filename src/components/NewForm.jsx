@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 import { ClientDetails, SpecimenDetails, Declaration } from "./subComponents/NewForm";
 import { ClientContent, SpecimenContent } from "../utils/formContents";
 import { formCollection } from "../utils/firebase";
+import { formatNewFormData } from "../utils/ModifyContent";
 
 export default function NewForm() {
 	const [formDetails, setFormDetails] = useState(new Map());
@@ -19,9 +20,10 @@ export default function NewForm() {
 				e.preventDefault();
 				let docSize = ((await formCollection.get().then((snapshot) => snapshot.size)) + 1).toString(); //TODO SHOULD BE DONE IN THE BACKEND
 				let docName = `FORM-${docSize.length < 6 ? "0".repeat(5 - docSize.length) + docSize : docSize}`; //TODO SHOULD BE DONE IN THE BACKEND
+
 				await formCollection
 					.doc(docName)
-					.set(Object.fromEntries(formDetails))
+					.set(formatNewFormData(Object.fromEntries(formDetails)))
 					.then(() => {
 						history.replace(`/submitted?form_id=${docName}`);
 					})

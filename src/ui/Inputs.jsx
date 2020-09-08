@@ -4,14 +4,15 @@ export const TextInput = ({
 	wrapperClass = "",
 	labelClass = "",
 	inputClass = "",
-	label,
-	id,
-	type,
-	required = false,
-	min,
-	max,
-	value,
-	update,
+	type = "",
+	label = "",
+	id = "",
+	required = true,
+	min = 0,
+	max = 100,
+	value = "",
+	update = () => {},
+	reference = null,
 }) => (
 	<div className={`input-group input-group-sm mb-2 ${wrapperClass}`}>
 		<div className='input-group-prepend'>
@@ -30,12 +31,23 @@ export const TextInput = ({
 			autoComplete='off'
 			value={value}
 			onChange={update}
+			ref={reference}
 		/>
 		<div className='invalid-tooltip'>Please provide a valid city.</div>
 	</div>
 );
 
-export const TextArea = ({ wrapperClass = "", labelClass = "", inputClass = "", label, id, required = false, value, update }) => (
+export const TextArea = ({
+	wrapperClass = "",
+	labelClass = "",
+	inputClass = "",
+	label = "",
+	id = "",
+	required = true,
+	value = "",
+	update = () => {},
+	reference = null,
+}) => (
 	<div className={`input-group input-group-sm mb-2 ${wrapperClass}`}>
 		<div className='input-group-prepend'>
 			<label className={`input-group-text ${labelClass}`} htmlFor={id}>
@@ -50,6 +62,7 @@ export const TextArea = ({ wrapperClass = "", labelClass = "", inputClass = "", 
 			required={required}
 			value={value}
 			onChange={update}
+			ref={reference}
 		/>
 	</div>
 );
@@ -58,12 +71,13 @@ export const MultiSelect = ({
 	wrapperClass = "",
 	labelClass = "",
 	selectClass = "",
-	id,
-	label,
-	options,
-	required = false,
-	value,
-	update,
+	id = "",
+	label = "",
+	options = [],
+	required = true,
+	value = "",
+	update = () => {},
+	reference = null,
 }) => (
 	<div className={`input-group input-group-sm mb-2 ${wrapperClass}`}>
 		<div className='input-group-prepend'>
@@ -71,7 +85,7 @@ export const MultiSelect = ({
 				{label}
 			</label>
 		</div>
-		<select className={`custom-select ${selectClass}`} id={id} required={required} value={value} onChange={update}>
+		<select ref={reference} className={`custom-select ${selectClass}`} id={id} required={required} value={value} onChange={update}>
 			<option></option>
 			{options.map((option) => (
 				<option key={option}>{option}</option>
@@ -80,7 +94,7 @@ export const MultiSelect = ({
 	</div>
 );
 
-export const CheckBox = ({ wrapperClass = "", labelClass = "", inputClass = "", label, id, required = false, checkboxRef = null }) => (
+export const CheckBox = ({ wrapperClass = "", labelClass = "", inputClass = "", label, id, required = true, checkboxRef = null }) => (
 	<div className={`form-group form-check ${wrapperClass}`}>
 		<label className={`form-check-label ${labelClass}`} htmlFor={id}>
 			<input type='checkbox' className={`form-check-input ${inputClass}`} id={id} required={required} ref={checkboxRef} />
@@ -89,7 +103,7 @@ export const CheckBox = ({ wrapperClass = "", labelClass = "", inputClass = "", 
 	</div>
 );
 
-export const SubmitButton = ({ wrapperClass = "", btnClass = "", btnText = "Submit", handleSubmit }) => (
+export const SubmitButton = ({ wrapperClass = "", btnClass = "", btnText = "Submit", handleSubmit = () => {} }) => (
 	<div className={`${wrapperClass}`}>
 		<button type='submit' className={`btn btn-primary ${btnClass}`} onClick={handleSubmit}>
 			{btnText}
