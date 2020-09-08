@@ -1,20 +1,23 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { formatTime, firstLetterCapital } from "../../../../utils/ModifyContent";
 
+//* columnIds should match keys of form data
 const TableBody = ({ headings, contents } = {}) => {
-	//* columnIds should match keys of table data
 	return (
 		<tbody>
 			{contents.map((content, index) => (
 				<tr key={index}>
-					{headings.map(({ element, columnId }, index) => (
+					{headings.map(({ element, columnId, data }, index) => (
 						<td key={index}>
 							{element === "link" ? (
-								<TableLink content={content} id={columnId} />
+								<TableLink content={{ ...content }} id={columnId} />
 							) : element === "badge" ? (
 								<TableBadge status={content[columnId]} />
+							) : element === "time" ? (
+								<TableTime time={content[columnId]} />
 							) : (
-								<TableName name={content[columnId]} />
+								<TableName name={content[columnId]} select={data.value} />
 							)}
 						</td>
 					))}
@@ -27,19 +30,13 @@ const TableBody = ({ headings, contents } = {}) => {
 export default TableBody;
 
 //! Table UI Elements
-const TableLink = ({ content, id }) => <Link to={{ pathname: `/forms/${content[id]}`, state: { formData: content } }}>{content[id]}</Link>;
-const TableBadge = ({ status }) => {
-	let clsName = "badge badge-";
-	switch (status) {
-		case "pending":
-			clsName += "info";
-			break;
-		case "rejected":
-			clsName += "danger";
-			break;
-		default:
-			clsName += "danger";
-	}
-	return <span className={clsName}>{status}</span>;
-};
-const TableName = ({ name }) => <div className='text-nowrap bd-highlight w-100'>{name}</div>;
+export const TableLink = ({ content, id }) => (
+	<Link to={{ pathname: `/forms/${content[id]}`, state: { formData: content } }}>{content[id]}</Link>
+);
+export const TableBadge = ({ status }) => (
+	<span className={`badge badge-${status === "pending" ? "info" : status === "rejected" ? "danger" : "light"}`}>
+		{firstLetterCapital(status)}
+	</span>
+);
+export const TableName = ({ name, select }) => <div className='text-nowrap bd-highlight w-100'>{name[select]}</div>;
+export const TableTime = ({ time }) => <div className='text-nowrap bd-highlight w-100'>{formatTime(time)}</div>;

@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { format } from "date-fns";
 import { Table } from "./subComponents/Requisitions";
 import { formCollection } from "../utils/firebase";
 import Loader from "../ui/Loader";
 import { headings } from "../utils/formsTable";
+import FormNav from "../ui/FormNav";
 
 export default function Requisitions() {
 	const [formsData, setFormsData] = useState([]);
@@ -12,17 +12,7 @@ export default function Requisitions() {
 	const fetchFormIds = useCallback(async () => {
 		await formCollection.get().then((snap) => {
 			let ids = [];
-			snap.forEach((doc) => {
-				ids.push({
-					id: doc.id,
-					submittedTime: format(new Date(doc.Rd.version.timestamp.seconds * 1000), "dd/MM/yyyy hh:mm a"),
-					contents: doc.data(),
-					status: doc.data().status || "pending",
-					reviewedBy: doc.data().reviewedBy || "N/A",
-					physician: doc.data().physician || "N/A",
-				});
-				//TODO SHOULD BE DONE IN THE BACKEND
-			});
+			snap.forEach((doc) => ids.push({ formId: doc.id, ...doc.data() }));
 			setFormsData(ids);
 		});
 		setLoading(false);
@@ -34,6 +24,7 @@ export default function Requisitions() {
 
 	return (
 		<div className='container'>
+			<FormNav links={["forms"]} />
 			<div className='table-responsive-sm'>
 				<Table headings={headings} contents={formsData} loading={{ state: !loading, component: Loader }} />
 			</div>

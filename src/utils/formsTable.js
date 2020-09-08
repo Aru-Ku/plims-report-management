@@ -1,27 +1,44 @@
 export const headings = [
 	{
-		columnId: "id",
+		columnId: "formId",
 		columnHead: "Form ID",
 		element: "link",
+		data: {
+			type: "string",
+		},
 	},
 	{
-		columnId: "submittedTime",
-		columnHead: "Submitted Time",
+		columnId: "lastModified",
+		columnHead: "Last Modified",
 		element: "time",
+		data: {
+			type: "string",
+		},
 	},
 	{
 		columnId: "status",
 		columnHead: "Status",
 		element: "badge",
+		data: {
+			type: "string",
+		},
 	},
 	{
-		columnId: "physician",
+		columnId: "physicianDetails",
 		columnHead: "Physician",
 		element: "name",
+		data: {
+			type: "object",
+			value: "name",
+		},
 	},
 	{
 		columnId: "reviewedBy",
 		columnHead: "Reviewed By",
 		element: "name",
+		data: {
+			type: "object",
+			value: "name",
+		},
 	},
 ];
